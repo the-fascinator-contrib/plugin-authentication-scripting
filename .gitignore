@@ -1,8 +1,13 @@
 target/
 pom.xml.tag
 pom.xml.releaseBackup
-pom.xml.versionsBackup
 pom.xml.next
 release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
+/.classpath
+/.project
+/.settings/org.eclipse.core.resources.prefs
+/.settings/org.eclipse.jdt.core.prefs
+/.settings/org.eclipse.m2e.core.prefs
+/.settings/org.maven.ide.eclipse.prefs
+/bin/.settings/org.eclipse.jdt.core.prefs
+/bin/.settings/org.maven.ide.eclipse.prefs
