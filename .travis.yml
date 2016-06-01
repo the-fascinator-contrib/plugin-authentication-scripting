@@ -1,0 +1,19 @@
+sudo: required
+language: java
+services:
+- docker
+before_install:
+- mkdir /tmp/build
+- docker pull qcifengineering/redbox-builder
+- docker run -v /tmp/build:/build -e "CLONEPATH=https://github.com/the-fascinator-contrib/plugin-authentication-scripting.git"
+  qcifengineering/redbox-builder
+install: true
+script: true
+after_success:
+- docker run -v /tmp/build:/build -e "SONATYPE_USERNAME=$SONATYPE_USERNAME" -e "SONATYPE_PASSWORD=$SONATYPE_PASSWORD"
+  qcifengineering/redbox-builder /bin/bash -c "cd build/src;mvn --settings /m2_repo/travis-settings.xml
+  -Dmaven.repo.local=/m2_repo -DskipTests=true deploy"
+env:
+  global:
+  - secure: M0M08d2b5kql8hGQA7XvusThldcDzcOfHVw1u6oV5YHkk0UXXoishq7gYRulc1+VrmMoaqPtz6Pey6xNd8AxVfr8Tm23XOuX6tbysH3JKFvZqXtniVNHKvx7HZHfgrlArOrzrCWiR3rU6aFHt/sR+v/GzQ5YiA3ep7tXz/e6bHEnPdZlaU2Gcre8wEk86vB9zfFCOlToXyDray/0FQMcAhdPvw9SBaRL5+PKI009dbHUGUhs0xh6NNKGRxUBHklJbzKY1GuD3stRdXZeq49J1+maXCwXMG+Q/iGzC/eQ5E6qrhwVlzDQqvn9O7RvZ/1bG4jH3YAz+cnyInCrBPtbYzYfX86VXpRi710Hsv/JsYkb6X89BmKgSJHQHPGEsRyr9PIm/LdcytBBvw6rmM6MuYpqf2R7onrtPYUGIgqnx3xeZ76EvCTJ1cdG7N/fOB+7IaN721kJDhDKniKmdlAbPjxG5OeGz+A4m2TYSjNK60+wWdv0TagyL/fgWusO7N2O2R58MqIBjLMVQC0tagqAI+C65J2ekbUQeKaIJalcqx24QzEsha74mMfuOv0RtDebr2zrd4rDWs1O4PkIc5tgAoLUZcUyu+RG/mTvN+6cWEuOC24xJgzqxc2MfH6mJADuprE9NKttzM2jsiYl6DiV7VWi5TCrejVFx7LEjgpGPsc=
+  - secure: mpnFuQvRGlAtWyiP5A/P3U8ygrPhApEyQr2xmpveOPc++Zfu0UxtGfUp/JlJ0JAOdq8+ezyXCNZxYU4KLP2+usLQtX9gz+t4GiLKlXFP513qPfzytJL2cAVf/FscIHOZQM8Eg1cJwxZ31ybjk8Uq1i6FYVwjmEzZGFtmhGWDmtnc3pu33ojY4dgfWLF54/GsqNv0OuL4Jy+FIpN2RQxcCU8AucG6CUXPJHpnk6K5u2IbCvg9bue2n8TtxJy38uSzli9hW/egbXPJEcu+6xo1alGI7zC9lb5Exi9QX1uekqrrR/awrQdkb6+AO9U6NFtIJmkSraEmG8vyGPgQIvrqFx+UqBVXSeI//egkd2Z/aFXnCW8Rnt3k5IWfdIuuV0PAqO1qVkbWiE5pKSQblh/0aHpb0P873a81On7WZQZc5ntLTK8H8/3MGRc0oWo9s+DReMazfWARIzuLlYJU57sFUocNlLb+afWo32eit3+i2PpBYiyC3Ji4z04eSJ2Z9oZGPg2y0wT7x9pQRvWenNkRHWyUzY0pbZUrkDX6LUo6069q9n7dlFXfvJ18KEWIekMtkESyMp9lYL7ewKREJqcIqpar2oCOO29/E13/t1KHenxdTKoKln14vuii3bxPQaAtHdGxNuFw8E0d/hEJKaNGHOE9c4N4nEytmfS5ZY900NY=
